@@ -1,0 +1,475 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta property="og:title" content="Yimei Xia · Ingénieure test & validation logicielle">
+<meta property="og:image" content="photo.jpg">
+<style>:root{color-scheme:light}body{margin:0}img{max-width:100%}[hidden]{display:none!important}</style><title>Yimei Xia</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<meta name="description" content="Yimei Xia — Ingénieure test & validation logicielle, systèmes embarqués (ENSEA).">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+/* Layout: sticky identity rail on the left, a validation-report style main column on the right; stacks on phones. */
+:root {
+  --bg: #f4f6f7;
+  --surface: #ffffff;
+  --fg: #13202a;
+  --muted: #586874;
+  --line: #d8dfe3;
+  --accent: #1d5fd0;
+  --accent-soft: #e4ecfb;
+  --pass: #17804f;
+  --pass-soft: #e1f3ea;
+  --display: "Bricolage Grotesque", "Segoe UI", system-ui, sans-serif;
+  --body: "IBM Plex Sans", "Segoe UI", system-ui, sans-serif;
+  --mono: "IBM Plex Mono", ui-monospace, Consolas, monospace;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #0d1418; --surface: #131d22; --fg: #e5ecf0; --muted: #94a4ae; --line: #25333b;
+    --accent: #79a6ff; --accent-soft: #1a2a45; --pass: #52c98f; --pass-soft: #143226;
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #0d1418; --surface: #131d22; --fg: #e5ecf0; --muted: #94a4ae; --line: #25333b;
+  --accent: #79a6ff; --accent-soft: #1a2a45; --pass: #52c98f; --pass-soft: #143226;
+  color-scheme: dark;
+}
+
+* { box-sizing: border-box; }
+body {
+  background: var(--bg); color: var(--fg);
+  font: 400 16px/1.6 var(--body);
+  -webkit-font-smoothing: antialiased;
+}
+body:not(.l-en) .en, body.l-en .fr { display: none !important; }
+a { color: var(--accent); text-underline-offset: 3px; }
+a:focus-visible, button:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; border-radius: 4px; }
+h1, h2, h3 { font-family: var(--display); text-wrap: balance; margin: 0; }
+p { margin: 0; }
+ul { margin: 0; padding: 0; list-style: none; }
+
+.wrap {
+  max-width: 1120px; margin: 0 auto;
+  padding-left: max(16px, env(safe-area-inset-left, 0px));
+  padding-right: max(16px, env(safe-area-inset-right, 0px));
+  padding-block: 28px 64px;
+  display: grid; grid-template-columns: 300px minmax(0, 1fr); gap: 56px;
+}
+
+/* ---------- top bar ---------- */
+.topbar {
+  grid-column: 1 / -1;
+  display: flex; justify-content: space-between; align-items: center; gap: 12px; flex-wrap: wrap;
+  font: 500 12px/1 var(--mono); letter-spacing: .06em; text-transform: uppercase; color: var(--muted);
+}
+.status { display: inline-flex; align-items: center; gap: 8px; }
+.status i { width: 8px; height: 8px; border-radius: 50%; background: var(--pass); box-shadow: 0 0 0 4px var(--pass-soft); }
+.lang { display: inline-flex; border: 1px solid var(--line); border-radius: 999px; padding: 3px; background: var(--surface); }
+.lang button {
+  font: inherit; letter-spacing: inherit; border: 0; background: transparent; color: var(--muted);
+  padding: 7px 12px; border-radius: 999px; cursor: pointer;
+}
+.lang button[aria-pressed="true"] { background: var(--fg); color: var(--bg); }
+
+/* ---------- side rail ---------- */
+.rail { display: flex; flex-direction: column; gap: 28px; align-self: start; position: sticky; top: calc(env(safe-area-inset-top, 0px) + 24px); }
+.portrait {
+  width: 100%; max-width: 100%; aspect-ratio: 4 / 5; object-fit: cover; object-position: 50% 30%;
+  border-radius: 6px; display: block; background: var(--line);
+}
+.ident h1 { font-size: 40px; line-height: 1.02; font-weight: 700; letter-spacing: -.02em; }
+.ident h1 span { color: var(--muted); font-weight: 500; }
+.ident .role { margin-top: 10px; font-weight: 500; }
+.ident .loc { margin-top: 4px; color: var(--muted); font-size: 14px; }
+
+.block-label {
+  font: 500 11px/1 var(--mono); letter-spacing: .1em; text-transform: uppercase; color: var(--muted);
+  margin-bottom: 12px; display: block;
+}
+.contact { display: flex; flex-direction: column; gap: 10px; font-size: 14px; }
+.contact .row { display: flex; align-items: center; justify-content: space-between; gap: 10px; }
+.contact code { font: 400 14px var(--mono); user-select: all; overflow-wrap: anywhere; }
+.copy {
+  font: 500 11px var(--mono); text-transform: uppercase; letter-spacing: .06em;
+  border: 1px solid var(--line); background: var(--surface); color: var(--fg);
+  padding: 5px 9px; border-radius: 4px; cursor: pointer; flex-shrink: 0;
+}
+.langs li { display: flex; justify-content: space-between; gap: 12px; font-size: 14px; padding: 7px 0; border-bottom: 1px dashed var(--line); }
+.langs li:last-child { border-bottom: 0; }
+.langs b { font-weight: 500; }
+.langs span { color: var(--muted); font-family: var(--mono); font-size: 12.5px; }
+
+/* ---------- main ---------- */
+main { display: flex; flex-direction: column; gap: 64px; min-width: 0; }
+section { display: flex; flex-direction: column; gap: 22px; }
+.sec-head { display: flex; align-items: baseline; gap: 14px; border-bottom: 1px solid var(--line); padding-bottom: 10px; }
+.sec-head h2 { font-size: 26px; font-weight: 700; letter-spacing: -.01em; }
+.sec-head small { font: 500 11px var(--mono); letter-spacing: .1em; text-transform: uppercase; color: var(--muted); margin-left: auto; }
+
+.lede h2 { font-size: clamp(30px, 4.4vw, 46px); line-height: 1.08; font-weight: 700; letter-spacing: -.025em; max-width: 20ch; }
+.lede h2 em { font-style: normal; color: var(--accent); }
+.lede p { max-width: 62ch; color: var(--muted); font-size: 17px; }
+
+/* test-report signature block */
+.report { border: 1px solid var(--line); border-radius: 6px; background: var(--surface); overflow-x: auto; }
+.report table { width: 100%; border-collapse: collapse; font-family: var(--mono); font-size: 13.5px; min-width: 520px; font-variant-numeric: tabular-nums; }
+.report caption { text-align: left; padding: 12px 16px; font-size: 11px; letter-spacing: .1em; text-transform: uppercase; color: var(--muted); border-bottom: 1px solid var(--line); }
+.report th { text-align: left; font-weight: 500; color: var(--muted); font-size: 11px; letter-spacing: .08em; text-transform: uppercase; padding: 10px 16px; border-bottom: 1px solid var(--line); }
+.report td { padding: 11px 16px; border-bottom: 1px solid var(--line); vertical-align: top; }
+.report tr:last-child td { border-bottom: 0; }
+.verdict { display: inline-block; padding: 2px 8px; border-radius: 3px; background: var(--pass-soft); color: var(--pass); font-weight: 500; font-size: 12px; }
+
+/* experience */
+.job { display: grid; grid-template-columns: 150px minmax(0, 1fr); gap: 24px; }
+.job + .job { padding-top: 28px; border-top: 1px dashed var(--line); }
+.when { font: 400 13px/1.5 var(--mono); color: var(--muted); font-variant-numeric: tabular-nums; }
+.when b { display: block; color: var(--fg); font-weight: 500; }
+.job h3 { font-size: 20px; font-weight: 700; line-height: 1.25; }
+.job .org { color: var(--muted); margin-top: 4px; font-size: 14.5px; }
+.job .org strong { color: var(--fg); font-weight: 600; }
+.bullets { margin-top: 14px; display: flex; flex-direction: column; gap: 10px; max-width: 68ch; }
+.bullets li { padding-left: 18px; position: relative; font-size: 15px; }
+.bullets li::before { content: ""; position: absolute; left: 0; top: .72em; width: 8px; height: 1.5px; background: var(--accent); }
+.bullets b { font-weight: 600; }
+.tags { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 14px; }
+.tags span { font: 400 12px var(--mono); padding: 3px 8px; border-radius: 3px; background: var(--accent-soft); color: var(--accent); }
+
+/* app spotlight */
+.app {
+  display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.25fr); gap: 32px; align-items: center;
+  background: var(--surface); border: 1px solid var(--line); border-radius: 8px; padding: 28px;
+}
+.app h3 { font-size: 28px; font-weight: 700; letter-spacing: -.01em; }
+.app .kicker { font: 500 11px var(--mono); letter-spacing: .1em; text-transform: uppercase; color: var(--accent); margin-bottom: 8px; display: block; }
+.app p { margin-top: 12px; color: var(--muted); font-size: 15px; }
+.app .bullets { margin-top: 16px; }
+.shots { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; align-items: start; }
+.shots figure { margin: 0; }
+.shots img { width: 100%; max-width: 100%; display: block; border-radius: 14px; border: 1px solid var(--line); }
+.shots figcaption { font: 400 11.5px var(--mono); color: var(--muted); margin-top: 8px; text-align: center; }
+.shots figure:nth-child(2) { margin-top: 28px; }
+
+/* projects */
+.projects { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; }
+.proj { border: 1px solid var(--line); border-radius: 6px; padding: 20px; display: flex; flex-direction: column; gap: 10px; background: var(--surface); }
+.proj h3 { font-size: 17px; font-weight: 700; line-height: 1.3; }
+.proj .when { font-size: 12px; }
+.proj p { font-size: 14.5px; color: var(--muted); }
+.proj .tags { margin-top: auto; padding-top: 6px; }
+
+/* skills */
+.skills { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0 32px; }
+.skills div { padding: 14px 0; border-bottom: 1px solid var(--line); display: grid; grid-template-columns: 150px minmax(0, 1fr); gap: 12px; }
+.skills dt { font: 500 12px/1.6 var(--mono); letter-spacing: .06em; text-transform: uppercase; color: var(--muted); }
+.skills dd { margin: 0; font-size: 15px; }
+
+.edu h3 { font-size: 20px; }
+.edu p { margin-top: 8px; color: var(--muted); max-width: 68ch; font-size: 15px; }
+
+.life { display: flex; flex-wrap: wrap; gap: 10px; }
+.life span { border: 1px solid var(--line); border-radius: 999px; padding: 8px 16px; font-size: 15px; background: var(--surface); }
+
+footer { grid-column: 1 / -1; border-top: 1px solid var(--line); padding-top: 20px; font: 400 12px var(--mono); color: var(--muted); display: flex; justify-content: space-between; flex-wrap: wrap; gap: 8px; }
+
+/* ---------- responsive ---------- */
+@media (max-width: 900px) {
+  .wrap { grid-template-columns: minmax(0, 1fr); gap: 40px; }
+  .rail { position: static; display: grid; grid-template-columns: 160px minmax(0, 1fr); gap: 20px 24px; align-items: start; }
+  .rail > .ident { align-self: center; }
+  .rail > .side-block { grid-column: 1 / -1; }
+  .app { grid-template-columns: minmax(0, 1fr); }
+  .skills { grid-template-columns: minmax(0, 1fr); }
+}
+@media (max-width: 600px) {
+  .rail { grid-template-columns: 112px minmax(0, 1fr); }
+  .ident h1 { font-size: 30px; }
+  .job { grid-template-columns: minmax(0, 1fr); gap: 8px; }
+  .when b { display: inline; margin-right: 8px; }
+  .projects { grid-template-columns: minmax(0, 1fr); }
+  .skills div { grid-template-columns: minmax(0, 1fr); gap: 4px; }
+  .app { padding: 20px; }
+  .shots { gap: 8px; }
+  .shots img { border-radius: 10px; }
+}
+@media (prefers-reduced-motion: no-preference) {
+  .lang button, .copy { transition: background .15s, color .15s; }
+}
+</style>
+
+</head>
+<body>
+<div class="wrap">
+  <div class="topbar">
+    <span class="status"><i></i>
+      <span class="fr">Disponible immédiatement · CDI</span>
+      <span class="en">Available now · Permanent role</span>
+    </span>
+    <div class="lang" role="group" aria-label="Langue / Language">
+      <button type="button" id="btn-fr" data-l="fr" aria-pressed="true">FR</button>
+      <button type="button" id="btn-en" data-l="en" aria-pressed="false">EN</button>
+    </div>
+  </div>
+
+  <aside class="rail">
+    <img class="portrait" src="photo.jpg" alt="Portrait de Yimei Xia">
+    <div class="ident">
+      <h1>Yimei <span>Xia</span></h1>
+      <p class="role fr">Ingénieure test &amp; validation logicielle</p>
+      <p class="role en">Software test &amp; validation engineer</p>
+      <p class="loc">Paris, France</p>
+    </div>
+
+    <div class="side-block">
+      <span class="block-label">Contact</span>
+      <div class="contact">
+        <div class="row">
+          <code id="email">yimeii.xia@gmail.com</code>
+          <button type="button" class="copy" id="copy-email"><span class="fr">Copier</span><span class="en">Copy</span></button>
+        </div>
+        <a href="https://www.linkedin.com/in/yimei-xia-933b952a5/" target="_blank" rel="noopener">LinkedIn ↗</a>
+      </div>
+    </div>
+
+    <div class="side-block">
+      <span class="block-label"><span class="fr">Langues</span><span class="en">Languages</span></span>
+      <ul class="langs">
+        <li><b><span class="fr">Français</span><span class="en">French</span></b><span><span class="fr">bilingue</span><span class="en">fluent</span></span></li>
+        <li><b><span class="fr">Anglais</span><span class="en">English</span></b><span>TOEIC 860</span></li>
+        <li><b><span class="fr">Chinois</span><span class="en">Chinese</span></b><span><span class="fr">maternelle</span><span class="en">native</span></span></li>
+      </ul>
+    </div>
+  </aside>
+
+  <main>
+    <!-- Intro -->
+    <section class="lede">
+      <h2 class="fr">Je conçois, j’automatise et j’analyse des <em>campagnes de test</em> pour des logiciels industriels exigeants.</h2>
+      <h2 class="en">I design, automate and analyse <em>test campaigns</em> for demanding industrial software.</h2>
+      <p class="fr">Ingénieure diplômée de l’ENSEA en systèmes embarqués. Deux stages en R&amp;D automobile (Valeo, Hirain) centrés sur la validation : scénarios de test automatisés, bancs HIL, analyse de traces et reporting qualité. J’utilise aussi les outils d’IA au quotidien, jusqu’à développer ma propre application mobile avec Gemini.</p>
+      <p class="en">ENSEA engineering graduate in embedded systems. Two automotive R&amp;D internships (Valeo, Hirain) focused on validation: automated test scenarios, HIL benches, trace analysis and quality reporting. I also use AI tools every day, including to build my own mobile app with Gemini.</p>
+
+      <div class="report">
+        <table>
+          <caption><span class="fr">Extrait de rapport · résultats mesurés en stage</span><span class="en">Report excerpt · results measured during internships</span></caption>
+          <thead>
+            <tr>
+              <th><span class="fr">Campagne</span><span class="en">Campaign</span></th>
+              <th><span class="fr">Mesure</span><span class="en">Metric</span></th>
+              <th><span class="fr">Verdict</span><span class="en">Verdict</span></th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td>Valeo · ADAS ULS · BL6 → BL7.1</td><td><span class="fr">Taux de réussite P0/P1</span><span class="en">P0/P1 pass rate</span></td><td><span class="verdict">95 % PASS</span></td></tr>
+            <tr><td><span class="fr">Valeo · campagne HIL cosimulée</span><span class="en">Valeo · co-simulated HIL run</span></td><td><span class="fr">Durée d’exécution</span><span class="en">Run time</span></td><td><span class="verdict">&lt; 2 h</span></td></tr>
+            <tr><td>Hirain · EyeQ · Tessy</td><td><span class="fr">Tests unitaires</span><span class="en">Unit tests</span></td><td><span class="verdict"><span class="fr">24 modules · 98 fonctions</span><span class="en">24 modules · 98 functions</span></span></td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- Experience -->
+    <section>
+      <div class="sec-head"><h2><span class="fr">Expériences</span><span class="en">Experience</span></h2><small>2025 – 2026</small></div>
+
+      <article class="job">
+        <div class="when"><b>04 – 09 / 2026</b>Créteil, France</div>
+        <div>
+          <h3 class="fr">Stage ingénieure test &amp; validation ADAS</h3>
+          <h3 class="en">ADAS test &amp; validation engineering intern</h3>
+          <p class="org"><strong>Valeo</strong> · <span class="fr">R&amp;D Valeo Brain, systèmes de stationnement SDV</span><span class="en">Valeo Brain R&amp;D, SDV parking systems</span></p>
+          <ul class="bullets fr">
+            <li><b>Scripts de test automatisés (CAPL)</b> sous Vector CANoe pour valider les fonctions ADAS/ARAS (RAEB, UPA, FKP) sur banc HIL.</li>
+            <li><b>Cosimulation 3D &amp; HIL</b> : interfaçage de Vosstrex 3D et CASTLE (acoustique ultrasons) avec CANoe pour injecter des cibles fixes et mobiles. Campagnes ramenées à moins de 2 h, 95 % de réussite P0/P1.</li>
+            <li><b>Passerelle CAN / Ethernet</b> : nœud de simulation CANoe assurant le mapping temps réel entre la nouvelle architecture Ethernet et le réseau CAN du véhicule prototype.</li>
+            <li><b>Essais sur piste</b> sur Mule Car et analyse des traces CAN pour diagnostiquer, avec les équipes client, l’inhibition de la fonction RAEB.</li>
+            <li>Flashage et calibration (VCON) des calculateurs PCU, CDC et PIU-M via OneClick (DoIP), winIDEA et DDT.</li>
+          </ul>
+          <ul class="bullets en">
+            <li><b>Automated test scripts (CAPL)</b> in Vector CANoe to validate ADAS/ARAS functions (RAEB, UPA, FKP) on a HIL bench.</li>
+            <li><b>3D co-simulation &amp; HIL</b>: connected Vosstrex 3D and CASTLE (ultrasonic acoustics) to CANoe to inject static and moving targets. Campaigns cut to under 2 h with a 95 % P0/P1 pass rate.</li>
+            <li><b>CAN / Ethernet gateway</b>: CANoe simulation node mapping the new Ethernet architecture to the prototype vehicle’s native CAN network in real time.</li>
+            <li><b>Track testing</b> on the Mule Car and CAN trace analysis to diagnose, with customer teams, why the RAEB function was inhibited.</li>
+            <li>Flashing and calibration (VCON) of PCU, CDC and PIU-M ECUs with OneClick (DoIP), winIDEA and DDT.</li>
+          </ul>
+          <div class="tags"><span>CANoe</span><span>CAPL</span><span>HIL</span><span>CAN / Ethernet</span><span>DoIP</span></div>
+        </div>
+      </article>
+
+      <article class="job">
+        <div class="when"><b>05 – 08 / 2025</b><span class="fr">Pékin, Chine</span><span class="en">Beijing, China</span></div>
+        <div>
+          <h3 class="fr">Stage développement logiciel</h3>
+          <h3 class="en">Software development intern</h3>
+          <p class="org"><strong>Hirain Technologies</strong> · <span class="fr">systèmes ADAS et électronique embarquée automobile</span><span class="en">ADAS and automotive embedded electronics</span></p>
+          <ul class="bullets fr">
+            <li><b>Tests unitaires</b> du logiciel bas niveau de la puce EyeQ sous Tessy : validation fonctionnelle, analyse de couverture et rapports (24 modules, 98 fonctions).</li>
+            <li><b>Automatisation Python</b> sur Cloud Linux : traitement massif de données via API REST, avec gestion des erreurs.</li>
+            <li>Mise en service de modèles de <b>Deep Learning embarqués</b> avec TIDL (Texas Instruments) : compilation, inférence, déploiement.</li>
+            <li><b>Diagnostic logiciel</b> : configuration des DTC sous CANdelaStudio, simulation de défauts et vérification ECU sous CANoe. Suivi et traçabilité des évolutions selon les exigences OEM.</li>
+          </ul>
+          <ul class="bullets en">
+            <li><b>Unit testing</b> of low-level EyeQ chip software in Tessy: functional validation, coverage analysis and reports (24 modules, 98 functions).</li>
+            <li><b>Python automation</b> on Cloud Linux: bulk data processing through REST APIs, with error handling.</li>
+            <li>Brought up <b>embedded deep-learning models</b> with TIDL (Texas Instruments): compilation, inference, deployment.</li>
+            <li><b>Software diagnostics</b>: DTC configuration in CANdelaStudio, fault simulation and ECU checks in CANoe. Change tracking and traceability to OEM requirements.</li>
+          </ul>
+          <div class="tags"><span>Python</span><span>Tessy</span><span>REST API</span><span>CANdelaStudio</span><span>TIDL</span></div>
+        </div>
+      </article>
+    </section>
+
+    <!-- App -->
+    <section>
+      <div class="sec-head"><h2><span class="fr">Projet personnel</span><span class="en">Side project</span></h2><small>Expo · JavaScript · Gemini</small></div>
+      <div class="app">
+        <div>
+          <span class="kicker"><span class="fr">Application mobile développée avec l’IA</span><span class="en">Mobile app built with AI</span></span>
+          <h3>ContactLens</h3>
+          <p class="fr">Une application qui rappelle à l’utilisateur quand changer ses lentilles de contact, selon le type de lentilles qu’il porte. Conçue et codée en JavaScript avec Expo, en travaillant avec Gemini comme assistant de développement.</p>
+          <p class="en">An app that reminds users when to replace their contact lenses, based on the type of lenses they wear. Designed and written in JavaScript with Expo, working with Gemini as a coding assistant.</p>
+          <ul class="bullets fr">
+            <li><b>Fréquence de port</b> : hebdomadaire, bimensuelle, mensuelle ou annuelle, qui fixe le rythme des rappels.</li>
+            <li><b>Notifications automatiques</b> de renouvellement, avec un bouton pour tester l’envoi.</li>
+            <li><b>Calendrier</b> de l’historique des changements, modifiable d’un tap.</li>
+            <li>Interface <b>trilingue</b> : français, anglais, chinois.</li>
+          </ul>
+          <ul class="bullets en">
+            <li><b>Wearing frequency</b>: weekly, bi-monthly, monthly or yearly, which sets the reminder schedule.</li>
+            <li><b>Automatic replacement notifications</b>, with a button to test delivery.</li>
+            <li><b>Calendar</b> of past changes, editable with one tap.</li>
+            <li><b>Three-language</b> interface: French, English, Chinese.</li>
+          </ul>
+        </div>
+        <div class="shots">
+          <figure><img src="app-type.jpg" alt="Écran de choix du type de lentilles" loading="lazy"><figcaption>Type</figcaption></figure>
+          <figure><img src="app-calendar.jpg" alt="Écran calendrier des changements" loading="lazy"><figcaption><span class="fr">Calendrier</span><span class="en">Calendar</span></figcaption></figure>
+          <figure><img src="app-settings.jpg" alt="Écran réglages et langue" loading="lazy"><figcaption><span class="fr">Réglages</span><span class="en">Settings</span></figcaption></figure>
+        </div>
+      </div>
+    </section>
+
+    <!-- Projects -->
+    <section>
+      <div class="sec-head"><h2><span class="fr">Projets techniques</span><span class="en">Technical projects</span></h2><small>ENSEA · 2025 – 2026</small></div>
+      <div class="projects">
+        <article class="proj">
+          <span class="when">09 / 2025 – 01 / 2026</span>
+          <h3 class="fr">Robots « chat et souris » autonomes temps réel</h3>
+          <h3 class="en">Autonomous real-time “cat and mouse” robots</h3>
+          <p class="fr">Capteurs ToF VL53L1X en I²C pour détecter le bord de table, LiDAR 2D en UART pour repérer les autres robots, accéléromètre pour détecter les collisions et changer de rôle.</p>
+          <p class="en">VL53L1X ToF sensors over I²C to detect table edges, 2D LiDAR over UART to locate other robots, accelerometer to detect collisions and switch roles.</p>
+          <div class="tags"><span>C</span><span>I²C</span><span>UART</span><span>LiDAR</span></div>
+        </article>
+        <article class="proj">
+          <span class="when">10 – 12 / 2025</span>
+          <h3 class="fr">Système audio temps réel sur STM32</h3>
+          <h3 class="en">Real-time audio system on STM32</h3>
+          <p class="fr">Architecture multitâche FreeRTOS avec sémaphores, pilotes I²C (codec) et SPI (MCP23S17), shell UART interactif pour lire et écrire les registres en direct.</p>
+          <p class="en">Multitask FreeRTOS architecture with semaphores, I²C (codec) and SPI (MCP23S17) drivers, interactive UART shell to read and write registers live.</p>
+          <div class="tags"><span>FreeRTOS</span><span>STM32</span><span>SPI</span></div>
+        </article>
+        <article class="proj">
+          <span class="when">10 – 12 / 2025</span>
+          <h3 class="fr">Pilotage moteur et interpréteur de commandes</h3>
+          <h3 class="en">Motor control and command interpreter</h3>
+          <p class="fr">Shell modulaire en C (parsing argc/argv, historique, enregistrement dynamique par pointeurs de fonctions). Moteur DC en PWM complémentaire avec limitation logicielle de vitesse.</p>
+          <p class="en">Modular C shell (argc/argv parsing, history, dynamic registration through function pointers). DC motor driven by complementary PWM with software speed limiting.</p>
+          <div class="tags"><span>C</span><span>PWM</span><span>STM32</span></div>
+        </article>
+        <article class="proj">
+          <span class="when">10 / 2025 – 01 / 2026</span>
+          <h3 class="fr">Système IoT STM32 + Raspberry Pi Zero</h3>
+          <h3 class="en">IoT system: STM32 + Raspberry Pi Zero</h3>
+          <p class="fr">Acquisition temps réel sur STM32 (BMP280 en I²C, moteur en CAN), passerelle Python sur Pi Zero exposant température et pression via une API Flask, régulation du moteur selon l’écart de température.</p>
+          <p class="en">Real-time acquisition on STM32 (BMP280 over I²C, motor over CAN), Python gateway on the Pi Zero serving temperature and pressure through a Flask API, motor regulated on temperature error.</p>
+          <div class="tags"><span>Python</span><span>Flask</span><span>CAN</span></div>
+        </article>
+      </div>
+    </section>
+
+    <!-- Skills -->
+    <section>
+      <div class="sec-head"><h2><span class="fr">Compétences</span><span class="en">Skills</span></h2></div>
+      <dl class="skills">
+        <div><dt><span class="fr">Test &amp; validation</span><span class="en">Test &amp; validation</span></dt><dd><span class="fr">Scénarios automatisés, HIL, tests unitaires, couverture, reporting</span><span class="en">Automated scenarios, HIL, unit tests, coverage, reporting</span></dd></div>
+        <div><dt><span class="fr">Programmation</span><span class="en">Programming</span></dt><dd>Python, JavaScript, C, CAPL, Java, VHDL, MATLAB</dd></div>
+        <div><dt><span class="fr">Outils</span><span class="en">Tools</span></dt><dd>Vector CANoe, Tessy, CANdelaStudio, Simulink, VS Code, Vivado</dd></div>
+        <div><dt><span class="fr">CAO &amp; simulation</span><span class="en">CAD &amp; simulation</span></dt><dd>SolidWorks, ADS, LTspice</dd></div>
+        <div><dt><span class="fr">Embarqué</span><span class="en">Embedded</span></dt><dd>STM32, FreeRTOS, Linux, FPGA, <span class="fr">conception PCB</span><span class="en">PCB design</span></dd></div>
+        <div><dt>IA</dt><dd><span class="fr">Gemini pour le développement, déploiement de modèles embarqués (TIDL)</span><span class="en">Gemini for development, embedded model deployment (TIDL)</span></dd></div>
+      </dl>
+    </section>
+
+    <!-- Education -->
+    <section class="edu">
+      <div class="sec-head"><h2><span class="fr">Formation</span><span class="en">Education</span></h2><small>2023 – 2026</small></div>
+      <div>
+        <h3>ENSEA · <span class="fr">École Nationale Supérieure de l’Électronique et de ses Applications</span><span class="en">French national graduate school of electronics</span></h3>
+        <p class="fr">Cergy, France · Diplôme d’ingénieur (Bac+5), filière systèmes embarqués. FreeRTOS, microcontrôleurs, bus et réseaux, conception FPGA, communications numériques (QAM/PSK), contrôle système.</p>
+        <p class="en">Cergy, France · French engineering degree (MSc level), embedded systems track. FreeRTOS, microcontrollers, buses and networks, FPGA design, digital communications (QAM/PSK), control systems.</p>
+      </div>
+    </section>
+
+    <!-- Life -->
+    <section>
+      <div class="sec-head"><h2><span class="fr">En dehors du travail</span><span class="en">Outside work</span></h2></div>
+      <div class="life">
+        <span class="fr">Patinage</span><span class="en">Ice skating</span>
+        <span class="fr">Équitation</span><span class="en">Horse riding</span>
+        <span class="fr">Chant</span><span class="en">Singing</span>
+        <span>Piano</span>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <span>Yimei Xia · Paris</span>
+    <span class="fr">Mis à jour en novembre 2026</span><span class="en">Updated November 2026</span>
+  </footer>
+</div>
+
+<script>
+(function () {
+  var body = document.body;
+  function setLang(l) {
+    body.classList.remove('l-fr', 'l-en');
+    body.classList.add('l-' + l);
+    document.documentElement.lang = l;
+    document.querySelectorAll('.lang button').forEach(function (b) {
+      b.setAttribute('aria-pressed', b.dataset.l === l ? 'true' : 'false');
+    });
+    try { localStorage.setItem('cv-lang', l); } catch (e) {}
+  }
+  var saved = null;
+  try { saved = localStorage.getItem('cv-lang'); } catch (e) {}
+  setLang(saved === 'en' ? 'en' : 'fr');
+  document.querySelectorAll('.lang button').forEach(function (b) {
+    b.addEventListener('click', function () { setLang(b.dataset.l); });
+  });
+
+  var btn = document.getElementById('copy-email');
+  var email = document.getElementById('email');
+  btn.addEventListener('click', function () {
+    var done = function () {
+      var html = btn.innerHTML;
+      btn.textContent = body.classList.contains('l-en') ? 'Copied' : 'Copié';
+      setTimeout(function () { btn.innerHTML = html; }, 1600);
+    };
+    var fallback = function () {
+      var r = document.createRange(); r.selectNodeContents(email);
+      var s = window.getSelection(); s.removeAllRanges(); s.addRange(r);
+    };
+    try {
+      navigator.clipboard.writeText(email.textContent).then(done, fallback);
+    } catch (e) { fallback(); }
+  });
+})();
+</script>
+
+</body>
+</html>
